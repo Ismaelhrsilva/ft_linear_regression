@@ -1,7 +1,8 @@
 # starting.md — ft_linear_regression
 
-> Documento de retomada. Escrito em 2026-09-08.
+> Documento de retomada. Escrito em 2026-09-08, atualizado em 2026-10-20.
 > Se o contexto se perdeu, comece lendo daqui.
+> **Recomeço: 2026-10-21.** Estudo da matemática: ver `math.md`.
 
 ---
 
@@ -36,6 +37,11 @@ do gradiente descendente. Se precisar delas, use a versão do git:
 `git show HEAD:linear_regression.pdf > /tmp/subject_original.pdf`
 (Decisão tomada: NÃO restaurar o arquivo no disco. Foi escolha consciente do Ismael.)
 
+**Atualização 2026-10-20:** o Ismael baixou de novo o subject da intra
+(`~/Downloads/en.subject_ft_linear.pdf`). É **idêntico byte a byte** ao PDF do git
+(md5 `50adb95c…`) — mesma Version 4.1. O `data.csv` baixado junto também é idêntico
+ao da pasta. Nada mudou no subject desde junho.
+
 ---
 
 ## 2. Modo de trabalho acordado com o Claude
@@ -54,17 +60,42 @@ intelectual e consiga defender cada decisão na peer-evaluation.
 
 ---
 
-## 3. Roadmap da semana (plano do Ismael)
+## 3. Roadmap (revisado em 2026-10-20)
 
-| Dia | Objetivo |
-|-----|----------|
-| 1 | Ler `data.csv`, printar na tela, guardar em estruturas úteis pro algoritmo |
-| 2 | "Fake algoritmo" — uma continha idiota só pra fechar o encaixe: entrada → cálculo → output. Define ONDE o algoritmo real vai morar |
-| 3+ | O algoritmo de verdade: gradiente descendente |
+Meta: **obrigatório em ~1 semana** com 1–2h/dia, em paralelo com um exercício por dia
+da piscine Python. Até 2 semanas se a matemática pedir mais calma — vale a pena,
+porque a defesa pergunta de onde saem as fórmulas.
 
-A lógica por trás disso: fazer o esqueleto rodar ponta a ponta antes de encarar a
-matemática. Bom instinto — o dia 2 elimina todo risco de integração antes de você ter
-que pensar em convergência.
+A lógica do Ismael continua: **esqueleto rodando ponta a ponta antes da matemática.**
+Detalhe que ajuda: o subject manda os thetas começarem em 0, então o `predict.py`
+funciona (prevê 0) antes de existir qualquer treino. A "conexão" entre os dois
+programas é só um arquivo com `theta0` e `theta1`.
+
+| Dia | Código (Ismael escreve) | Estudo (`math.md`) |
+|-----|-------------------------|--------------------|
+| 1 | `data.py` — `load_data` (seção 4 abaixo) | §1–2: notação, reta, o modelo |
+| 2 | "Fake algoritmo": `predict.py` lê o arquivo de thetas (0, 0 se não existir), pede km, valida, imprime `θ0 + θ1·km`. Plot dos pontos do CSV (bônus 1) | §3–4: função de custo |
+| 3 | — (dia de papel) | §5–6: derivadas e a dedução das fórmulas |
+| 4 | `train.py`: loop do gradiente descendente, sem normalização ainda — **ver ele divergir** | §7–8: GD na mão, learning rate |
+| 5 | Normalização + desnormalização, salvar thetas, testar `predict` com eles | §9–10: normalização e solução exata pra conferir |
+| 6 | Bônus: reta no gráfico, curva J × iteração, programa de precisão | §11: métricas |
+| 7 | Folga, revisão, `flake8`, ensaio de defesa | §12: checklist |
+
+Em todo dia de código vale o loop da seção 2: Claude escreve o `test.py` daquele
+pedaço (os números do dataset de brinquedo do `math.md` servem de valores esperados),
+Ismael escreve o código, Claude revisa.
+
+### Pontos de atenção (resumo — detalhe no `math.md`)
+
+1. **Normalização** (§9): km até 240.000 faz o gradiente de θ1 ser ~100.000× o de θ0.
+   Sem normalizar, diverge ou não converge nunca. Treinar com km normalizado e
+   **desnormalizar os thetas** — o `predict` usa a hipótese do subject com km cru.
+2. **Atualização simultânea** (§7.2): os dois `tmpθ` com os thetas antigos.
+3. **`m`** = número de linhas do dataset (24).
+4. **Bibliotecas**: nada que faça a regressão (`numpy.polyfit`, `sklearn`,
+   `scipy.stats.linregress`). Leitura do CSV: decisão já tomada de usar só `csv` da
+   stdlib (seção 4). `matplotlib` pro bônus é ok.
+5. **Capítulo III (IA)**: saber explicar cada decisão. Por isso o modo da seção 2.
 
 ---
 
@@ -124,17 +155,19 @@ Nada de normalização, nada de theta, nada de gradiente descendente.
 ```
 data.csv                 24 pares km,price + cabeçalho
 GUIDE.md                 guia longo em PT-BR sobre o projeto (escrito antes)
-linear_regression.pdf    subject v4.1 (versão Firefox, ligaduras quebradas)
+math.md                  guia de estudo da matemática, passo a passo, com exercícios e gabarito (2026-10-20)
+linear_regression.pdf    subject v4.1 (versão Firefox, ligaduras quebradas; modificado em relação ao git)
 predict.py               stub: só pede mileage e valida se é dígito
 train.py                 vazio (0 bytes)
 starting.md              este arquivo
 ```
 
-Único commit: `09c1a07 Starting`.
+Commits: `09c1a07 Starting`, `3fe11a0 docs: adiciona starting.md`.
 
 ---
 
-## 6. Próximo passo quando retomar
+## 6. Próximo passo quando retomar (2026-10-21)
 
-Claude explica os 5 conceitos da seção 4 e escreve o `test.py`.
-Ismael escreve o `data.py`. Depois entra o loop de revisão.
+1. Ler `math.md` §1–2 e fazer os exercícios no papel.
+2. Claude explica os 5 conceitos da seção 4 e escreve o `test.py` de `load_data`.
+3. Ismael escreve o `data.py`. Depois entra o loop de revisão.
