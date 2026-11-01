@@ -2,7 +2,6 @@
 
 | # | Seção | O que você ganha | Tempo |
 |---|-------|------------------|-------|
-| 1 | Notação e reta | Ler as fórmulas do subject sem travar | 30 min |
 | 2 | O modelo | Saber o que θ0 e θ1 significam no problema | 20 min |
 | 3 | O erro (função de custo) | Saber o que "aprender" quer dizer | 45 min |
 | 4 | A paisagem do custo | Intuição visual do gradiente descendente | 20 min |

@@ -4,6 +4,8 @@
 > Se o contexto se perdeu, comece lendo daqui.
 > **Recomeço: 2026-10-21.** Estudo da matemática: ver `math.md`.
 
+> **Status 2026-10-29:** Dia 1 FEITO — `src/data.py` (`load_data`) passa 6/6, commit `69147fe`. Código mudou pra `src/`, guias pra `guides/`. math.md §1 estudado (atenção: Σ(x·y) ≠ Σx·Σy). **Próximo:** math.md §2 + Dia 2 (`predict.py`), mostrando antes o output esperado.
+
 ---
 
 ## 1. Verificação do subject (RESOLVIDO — não precisa refazer)
